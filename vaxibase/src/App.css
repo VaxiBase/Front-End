@@ -1,0 +1,19 @@
+*{
+  margin: 0;
+  background-color: black;
+  align-items: center;
+  
+}
+
+.page {
+  text-align: center;
+  height: 100vh;
+  width: 100vh;
+  margin: 0 auto;
+}
+
+.map {
+
+
+}
+
