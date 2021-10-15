@@ -1,6 +1,6 @@
 *{
   margin: 0;
-  background-color: black;
+  
   align-items: center;
   
 }
@@ -13,7 +13,11 @@
 }
 
 .map {
+  background-color: black;
+}
 
-
+.popup{
+  color: rgb(0, 0, 0);
+  
 }
 
