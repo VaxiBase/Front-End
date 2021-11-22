@@ -1,9 +1,10 @@
 
 import './App.css';
 
-import React,{useState,useEffect} from "react"
-import CanadaMap from "react-canada-map"
-import Popup from 'react-animated-popup'
+import React, {useState,useEffect} from "react";
+import CanadaMap, { Provinces } from "react-canada-map";
+import Popup from 'react-animated-popup';
+import {db} from 'firebase';
 
 //import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import firebase from './firebase';
@@ -12,26 +13,17 @@ import firebase from './firebase';
 
 
 function App() {
-
- 
+  const [provinceClicked, setProvinceClicked] = useState("");
 
   const mapClickHandler = (province, event) => {
-   
+    console.log("province clicked: ", province);
+
+    setProvinceClicked(province);
+
+    
     
 
-   
-
-    try {
-  
-    
-      
-    } catch (e) {
-      
-    }
-
-    setVisible(true)
-    
-
+    setVisible(true);
   }
 
   
@@ -40,7 +32,7 @@ function App() {
 
   const print = (dbRef) =>
   {
-    return "123"
+    return provinceClicked
   }
 
   const [visible, setVisible] = useState(false)
@@ -57,7 +49,6 @@ function App() {
               fillColor="green"
               onHoverColor="Blue"
               onClick = {mapClickHandler}
-            
             ></CanadaMap>
         </div>
         <div className = "popup">
