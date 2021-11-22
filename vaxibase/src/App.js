@@ -65,13 +65,16 @@ function App() {
         onHoverColor: "red",
       },
        NU: {
-        onHoverColor: "#FF7F7F",       
+        onHoverColor: "#FF7F7F",    
       },
       PE: {
         onHoverColor: "green",
       },
       SK: {
         onHoverColor: "orange",
+      },
+       MB: {
+        onHoverColor: "lightgreen",
       },
     }
   }
