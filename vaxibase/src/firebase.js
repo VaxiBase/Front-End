@@ -1,6 +1,5 @@
 import firebase from 'firebase'
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyB-5Z1fz9rsfVhxCLcSQ1n4hfFdBhYmW1c",
     authDomain: "vaxibase.firebaseapp.com",
