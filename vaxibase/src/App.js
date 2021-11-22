@@ -8,6 +8,8 @@ import {db} from './firebase';
 
 function App() {
   const [provinceClicked, setProvinceClicked] = useState("");
+  const [visible, setVisible] = useState(false)
+  const [message, setMessage] = useState(" ")
 
   const mapClickHandler = (province, event) => {
     console.log("province clicked: ", province);
@@ -33,30 +35,56 @@ function App() {
     setVisible(true);
   }
 
-  
- 
-  
-
-  const print = (dbRef) =>
-  {
-    return provinceClicked
+  const customizeProvince = () => {
+    return {
+      ON: {
+        onHoverColor: "yellow",
+      },
+      NB: {
+        onHoverColor: "orange",
+      },
+      QC: {
+        onHoverColor: "lightblue",
+      },
+      AB: {
+        onHoverColor: "blue",
+      },
+      BC: {
+        onHoverColor: "darkorange",
+      },
+      YT: {
+        onHoverColor: "purple",
+      },
+       NT: {
+        onHoverColor: "pink",
+      },
+      NL: {
+        onHoverColor: "#CBC3E3",
+      },
+      NS: {
+        onHoverColor: "red",
+      },
+       NU: {
+        onHoverColor: "#FF7F7F",       
+      },
+      PE: {
+        onHoverColor: "green",
+      },
+      SK: {
+        onHoverColor: "orange",
+      },
+    }
   }
-
-  const [visible, setVisible] = useState(false)
-  const [message, setMessage] = useState(" ")
-  
-
-  
-
 
   return (
     <div className="page">
         <div className = "map">
-            <CanadaMap
-              fillColor="green"
-              onHoverColor="Blue"
-              onClick = {mapClickHandler}
-            ></CanadaMap>
+        <CanadaMap
+          customize={customizeProvince()}
+          fillColor="ForestGreen"
+          onHoverColor="Gold"
+          onClick={mapClickHandler}
+        ></CanadaMap>
         </div>
         <div className = "popup">
             <Popup visible={visible} onClose={() => setVisible(false)}>
