@@ -1,30 +1,44 @@
 
 import './App.css';
 
-import React,{useState,useEffect} from "react"
-import CanadaMap from "react-canada-map"
-import Popup from 'react-animated-popup'
-
-//import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import firebase from './firebase';
-import db from './firebase';
-
-//import { doc, getDocs } from "firebase/firestore";
-
+import React, {useState,useEffect} from "react";
+import CanadaMap, { Provinces } from "react-canada-map";
+import Popup from 'react-animated-popup';
+import {db} from './firebase';
 
 function App() {
+  const [provinceClicked, setProvinceClicked] = useState("");
+  const [visible, setVisible] = useState(false)
+  const [message, setMessage] = useState(" ")
+
   const mapClickHandler = (province, event) => {
-    console.log("province clicked: ", province)
+    console.log("province clicked: ", province);
+
+    setProvinceClicked(province);
+
+    db.ref('province_data/' + province).once('value').then(function (snapshot) {
+      var name = snapshot.val().name;
+      var date = snapshot.val().date;
+      var percent_vaccinated_total=snapshot.val().percent_vaccinated_total;
+      var population_death=snapshot.val().population_death;
+      var total_hospitalizations=snapshot.val().total_hospitalizations;
+      var percent_booster_shot=snapshot.val().percent_booster_shot;
+
+      document.getElementById("name").innerHTML=name;
+      document.getElementById("date").innerHTML=date;
+      document.getElementById("percent_vaccinated_total").innerHTML=percent_vaccinated_total;
+      document.getElementById("population_death").innerHTML=population_death;
+      document.getElementById("total_hospitalizations").innerHTML=total_hospitalizations;
+      document.getElementById("percent_booster_shot").innerHTML=percent_booster_shot;
+  })
+
+    setVisible(true);
   }
 
   const customizeProvince = () => {
     return {
       ON: {
-       
         onHoverColor: "yellow",
-       
-       
-        
       },
       NB: {
         onHoverColor: "orange",
@@ -33,9 +47,7 @@ function App() {
         onHoverColor: "lightblue",
       },
       AB: {
-       
         onHoverColor: "blue",
-        
       },
       BC: {
         onHoverColor: "darkorange",
@@ -45,7 +57,6 @@ function App() {
       },
        NT: {
         onHoverColor: "pink",
-         
       },
       NL: {
         onHoverColor: "#CBC3E3",
@@ -54,7 +65,7 @@ function App() {
         onHoverColor: "red",
       },
        NU: {
-        onHoverColor: "	#FF7F7F",       
+        onHoverColor: "#FF7F7F",       
       },
       PE: {
         onHoverColor: "green",
@@ -66,12 +77,27 @@ function App() {
   }
 
   return (
-    <CanadaMap
-      customize={customizeProvince()}
-      fillColor="ForestGreen"
-      onHoverColor="Gold"
-      onClick={mapClickHandler}
-    ></CanadaMap>
+    <div className="page">
+        <div className = "map">
+        <CanadaMap
+          customize={customizeProvince()}
+          fillColor="ForestGreen"
+          onHoverColor="Gold"
+          onClick={mapClickHandler}
+        ></CanadaMap>
+        </div>
+        <div className = "popup">
+            <Popup visible={visible} onClose={() => setVisible(false)}>
+                <p><strong id="name"></strong></p>
+                <p><strong id="date"></strong></p>
+                <p>Population Vaccinated: <strong id="percent_vaccinated_total">%</strong></p>
+                <p>Booster Shots: <strong id="percent_booster_shot">%</strong></p>                
+                <p>Current Hospitalizations: <strong id="total_hospitalizations"></strong></p>
+                <p>Total Deaths: <strong id="population_death"></strong></p>
+            </Popup>
+        </div>
+    </div>
+
   )
 }
 

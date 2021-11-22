@@ -1,6 +1,5 @@
 import firebase from 'firebase'
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyB-5Z1fz9rsfVhxCLcSQ1n4hfFdBhYmW1c",
     authDomain: "vaxibase.firebaseapp.com",
@@ -12,12 +11,8 @@ const firebaseConfig = {
   };
   
 
-
-firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-
+ const app = firebase.initializeApp(firebaseConfig);
+ export const db = app.database();
 
  
- 
-  
- export default db;
+ export default firebase;
