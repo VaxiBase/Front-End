@@ -7,66 +7,71 @@ import Popup from 'react-animated-popup'
 
 //import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import firebase from './firebase';
+import db from './firebase';
 
 //import { doc, getDocs } from "firebase/firestore";
 
 
 function App() {
-
- 
-
   const mapClickHandler = (province, event) => {
-   
-    
+    console.log("province clicked: ", province)
+  }
 
-   
-
-    try {
-  
-    
-      
-    } catch (e) {
-      
+  const customizeProvince = () => {
+    return {
+      ON: {
+       
+        onHoverColor: "yellow",
+       
+       
+        
+      },
+      NB: {
+        onHoverColor: "orange",
+      },
+      QC: {
+        onHoverColor: "lightblue",
+      },
+      AB: {
+       
+        onHoverColor: "blue",
+        
+      },
+      BC: {
+        onHoverColor: "darkorange",
+      },
+      YT: {
+        onHoverColor: "purple",
+      },
+       NT: {
+        onHoverColor: "pink",
+         
+      },
+      NL: {
+        onHoverColor: "#CBC3E3",
+      },
+      NS: {
+        onHoverColor: "red",
+      },
+       NU: {
+        onHoverColor: "	#FF7F7F",       
+      },
+      PE: {
+        onHoverColor: "green",
+      },
+      SK: {
+        onHoverColor: "orange",
+      },
     }
-
-    setVisible(true)
-    
-
   }
-
-  
- 
-  
-
-  const print = (dbRef) =>
-  {
-    return "123"
-  }
-
-  const [visible, setVisible] = useState(false)
-  const [message, setMessage] = useState(" ")
-  
-
-  
-
 
   return (
-    <div className="page">
-        <div className = "map">
-            <CanadaMap
-              fillColor="green"
-              onHoverColor="Blue"
-              onClick = {mapClickHandler}
-            
-            ></CanadaMap>
-        </div>
-        <div className = "popup">
-            <Popup visible={visible} onClose={() => setVisible(false)}>
-                <p>{print()}</p>
-            </Popup>
-        </div>
-    </div>
-
+    <CanadaMap
+      customize={customizeProvince()}
+      fillColor="ForestGreen"
+      onHoverColor="Gold"
+      onClick={mapClickHandler}
+    ></CanadaMap>
   )
 }
 
