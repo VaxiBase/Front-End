@@ -6,6 +6,12 @@ import CanadaMap, { Provinces } from "react-canada-map";
 import Popup from 'react-animated-popup';
 import {db} from './firebase';
 
+
+import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+
+// Be sure to include styles at some point, probably during your bootstraping
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+
 function App() {
   const [provinceClicked, setProvinceClicked] = useState("");
   const [visible, setVisible] = useState(false)
@@ -81,6 +87,48 @@ function App() {
 
   return (
     <div className="page">
+
+      <div className = "sideb">
+      <SideNav
+        onSelect={(selected) => {
+          if(selected=="home"){
+          window.open("https://google.ca", "_blank")
+          }
+
+          if(selected=="charts")
+          {
+            window.open("https://github.com", "_blank")
+          }
+            
+        }}
+    >
+        <SideNav.Toggle />
+        <SideNav.Nav defaultSelected="home">
+            <NavItem eventKey="home">
+                <NavIcon>
+                    <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+                </NavIcon>
+                <NavText>
+                    API
+                </NavText>
+            </NavItem>
+
+            <NavItem eventKey="charts">
+                <NavIcon>
+                    <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+                </NavIcon>
+                <NavText>
+                    GITHUB
+                </NavText>
+                
+                </NavItem>
+           
+        </SideNav.Nav>
+</SideNav>
+      </div>
+
+      
+
         <div className = "map">
         <CanadaMap
           customize={customizeProvince()}

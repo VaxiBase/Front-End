@@ -2,17 +2,31 @@
   margin: 0;
   
   align-items: center;
+
+  
   
 }
 
 .page {
   text-align: center;
-  height: 100vh;
-  width: 100vh;
-  margin: 0 auto;
+  
+  
 }
 
 .map {
+  background-color: black;
+  position:fixed;
+    padding-bottom: 30px;
+    
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+}
+
+.sideb{
   background-color: white;
 }
 
