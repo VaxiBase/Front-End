@@ -126,10 +126,10 @@ function App() {
                 <p>Updated: <strong>{provinceData.date}</strong></p>
                 <p>Population Fully Vaccinated: <strong>{provinceData.percent_vaccinated_total}</strong>%</p>
                 <p>Population With Booster Shots: <strong>{provinceData.percent_booster_total}</strong>%</p>   
-                <p>Total doses administered: <strong>{provinceData.total_vaccinations}</strong></p>     
-                <p>Total Cases: <strong>{provinceData.total_cases}</strong></p>        
-                <p>Current Hospitalizations: <strong>{provinceData.total_hospitalizations}</strong></p>
-                <p>Total Deaths: <strong>{provinceData.total_fatalities}</strong></p>
+                <p>Total doses administered: <strong>{provinceData.total_vaccinations.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong></p>     
+                <p>Total Cases: <strong>{provinceData.total_cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong></p>        
+                <p>Current Hospitalizations: <strong>{provinceData.total_hospitalizations.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong></p>
+                <p>Total Deaths: <strong>{provinceData.total_fatalities.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong></p>
             </Popup>
         </div>
     </div>
