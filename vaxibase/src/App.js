@@ -13,31 +13,17 @@ import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/rea
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
 function App() {
-  const [provinceClicked, setProvinceClicked] = useState("");
   const [visible, setVisible] = useState(false)
-  const [message, setMessage] = useState(" ")
+  const [provinceData, setProvinceData] = useState("")
 
-  const mapClickHandler = (province, event) => {
-    console.log("province clicked: ", province);
-
-    setProvinceClicked(province);
-
-    db.ref('province_data/' + province).once('value').then(function (snapshot) {
-      var name = snapshot.val().name;
-      var date = snapshot.val().date;
-      var percent_vaccinated_total=snapshot.val().percent_vaccinated_total;
-      var population_death=snapshot.val().population_death;
-      var total_hospitalizations=snapshot.val().total_hospitalizations;
-      var percent_booster_shot=snapshot.val().percent_booster_shot;
-
-      document.getElementById("name").innerHTML=name;
-      document.getElementById("date").innerHTML=date;
-      document.getElementById("percent_vaccinated_total").innerHTML=percent_vaccinated_total;
-      document.getElementById("population_death").innerHTML=population_death;
-      document.getElementById("total_hospitalizations").innerHTML=total_hospitalizations;
-      document.getElementById("percent_booster_shot").innerHTML=percent_booster_shot;
+  db.ref('province_data').once('value').then(function (snapshot) {
+    localStorage.setItem("provinceData", JSON.stringify(snapshot.val()))
   })
 
+  const mapClickHandler = (province, event) => {
+    var data = JSON.parse(localStorage.getItem("provinceData"));
+    setProvinceData(data[province]);
+    
     setVisible(true);
   }
 
@@ -85,9 +71,12 @@ function App() {
     }
   }
 
+  useEffect(() => {
+
+  })
+
   return (
     <div className="page">
-
       <div className = "sideb">
       <SideNav
         onSelect={(selected) => {
@@ -101,7 +90,7 @@ function App() {
           }
             
         }}
-    >
+      >
         <SideNav.Toggle />
         <SideNav.Nav defaultSelected="home">
             <NavItem eventKey="home">
@@ -112,7 +101,6 @@ function App() {
                     API
                 </NavText>
             </NavItem>
-
             <NavItem eventKey="charts">
                 <NavIcon>
                     <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
@@ -120,16 +108,11 @@ function App() {
                 <NavText>
                     GITHUB
                 </NavText>
-                
-                </NavItem>
-           
+            </NavItem>
         </SideNav.Nav>
-</SideNav>
+      </SideNav>
       </div>
-
-      
-
-        <div className = "map">
+      <div className = "map">
         <CanadaMap
           customize={customizeProvince()}
           fillColor="ForestGreen"
@@ -139,12 +122,14 @@ function App() {
         </div>
         <div className = "popup">
             <Popup visible={visible} onClose={() => setVisible(false)}>
-                <p><strong id="name"></strong></p>
-                <p><strong id="date"></strong></p>
-                <p>Population Vaccinated: <strong id="percent_vaccinated_total">%</strong></p>
-                <p>Booster Shots: <strong id="percent_booster_shot">%</strong></p>                
-                <p>Current Hospitalizations: <strong id="total_hospitalizations"></strong></p>
-                <p>Total Deaths: <strong id="population_death"></strong></p>
+                <p><strong>{provinceData.name}</strong></p>
+                <p>Updated: <strong>{provinceData.date}</strong></p>
+                <p>Population Fully Vaccinated: <strong>{provinceData.percent_vaccinated_total}</strong>%</p>
+                <p>Population With Booster Shots: <strong>{provinceData.percent_booster_total}</strong>%</p>   
+                <p>Total doses administered: <strong>{provinceData.total_vaccinations}</strong></p>     
+                <p>Total Cases: <strong>{provinceData.total_cases}</strong></p>        
+                <p>Current Hospitalizations: <strong>{provinceData.total_hospitalizations}</strong></p>
+                <p>Total Deaths: <strong>{provinceData.total_fatalities}</strong></p>
             </Popup>
         </div>
     </div>
